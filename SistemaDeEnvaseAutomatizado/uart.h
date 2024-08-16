@@ -11,11 +11,12 @@
 
 #define FOSC 8000000 // Clock Speed
 #define BAUD 9600
-
 #define PULA_LINHA	EscritaTexto("\r",sizeof("\r"));
+
 void ConfigUart( void );
-unsigned char LeSerial( void );
 void EscritaTexto( char *caracter, unsigned char tamanho );
+unsigned char LeSerial( void );
+
 
 
 

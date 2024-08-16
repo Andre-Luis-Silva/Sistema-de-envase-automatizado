@@ -11,6 +11,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <lcd.h>
 #include <gpio.h>
 #include <uart.h>
 #include <math.h>

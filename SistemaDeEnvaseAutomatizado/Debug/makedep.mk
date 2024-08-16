@@ -6,6 +6,8 @@ adc.c
 
 gpio.c
 
+lcd.c
+
 main.c
 
 timer.c

@@ -7,12 +7,18 @@
 
 #include "comum.h"
 
-unsigned char g_flagPortaAtiva, flagPorta1, flagPorta2;
 int main(void)
 {
     /* Replace with your application code */
+	ConfigGpio();
+	ConfigADC();
+	ConfigUart();
+	sei();
+	ConfigTimers();
+	ConfigDisplay();
+	
     while (1) 
     {
+
     }
 }
-

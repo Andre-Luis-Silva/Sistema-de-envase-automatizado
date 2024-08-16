@@ -13,7 +13,7 @@ void ConfigADC(void)
   The ADC was configured using the 1.1 internal regulator to make 
   the measure of the voltage of battery 
   */
-  ADMUX = (1 << REFS1) | (1 << REFS0);
+  ADMUX = 0;
   ADCSRA = (1 << ADEN);
 }
 
