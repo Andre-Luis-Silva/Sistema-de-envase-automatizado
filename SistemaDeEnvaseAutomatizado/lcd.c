@@ -161,3 +161,56 @@ void EscreveLcd(char *dado, unsigned char size)
 	}
 	rs_off;
 }
+
+void AtualizaLcd(int estado, int numeroDeVasilhamesInteiro)
+{
+	char *msg = NULL;
+	//APAGA_LINHA;
+	ByteDisplay(comando,0x02);
+	switch(estado)
+	{
+		case INICIO:
+			msg = "Estado:Inicio   ";
+		break;
+		case EMERGENCIA:
+			msg = "Estado:Emerg     ";
+		break;
+		case LIGADO:
+			msg = "Estado:Ligado   ";
+		break;
+		case CONFIGURA_VASILHAMES:
+			msg = "Estado:Config   ";
+		break;
+		case MOVE_ESTEIRA:
+			msg = "Estado:Esteira  ";
+		break;
+		case VERIFICA_DOSADOR:
+			msg = "Estado:Dosador  ";
+		break;
+		case MOVE_CILINDRO:
+			msg = "Estado:Cilindro ";
+		break;
+		case PARADA_TIMEOUT_ESTEIRA:
+			msg = "Estado:Timeout  ";
+		break;
+		case ULTIMO_ENVASE:
+			msg = "Estado:Ultimo   ";
+		break;
+		case MOVE_RECIPIENTE:
+			msg = "Estado:Move Rec ";
+		break;
+		case RESERVATORIO_BAIXO:
+			msg = "Estado:Res Baixo";
+		break;
+		case SENSOR_DEF:
+			msg = "Estado:Sens Erro";
+		break;
+	}
+	EscreveLcd(msg, strlen(msg) + 1);
+	ByteDisplay(comando,PULA_LINHA_LCD);
+	char numeroDeVasilhames[2];
+	itoa(numeroDeVasilhamesInteiro,numeroDeVasilhames,10);
+	//numeroDeVasilhames[0] = numeroDeVasilhamesInteiro % 10 + '0';
+	//numeroDeVasilhames[1] = numeroDeVasilhamesInteiro + '0';
+	EscreveLcd(numeroDeVasilhames, 3);
+}

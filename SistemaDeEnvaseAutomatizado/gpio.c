@@ -6,6 +6,8 @@
  */
 #include <comum.h>
 
+volatile int flagEmergencia = 0;
+
 void ConfigGpio(void)
 {
 
@@ -14,6 +16,9 @@ void ConfigGpio(void)
 
 	// PD7, PD6, PD5, PD4, PB3, PB2 como sa�das
 	DDRD = (1 << DDD7) | (1 << DDD6) | (1 << DDD5) | (1 << DDD4) | (1 << DDD3) | (1 << DDD2);
+	
+	PCICR = (1 << PCIE1);
+	PCMSK1 = (1 << PCINT12);
 }
 
 void GpioSet(unsigned char port, unsigned char pin)
@@ -74,4 +79,9 @@ void GpioToogle(unsigned char port, unsigned char pin)
 		PORTD ^= (1 << pin);
 		break;
 	}
+}
+
+ISR(PCINT1_vect)
+{
+	flagEmergencia = 1;
 }

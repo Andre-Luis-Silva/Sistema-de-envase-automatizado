@@ -6,7 +6,11 @@
  */ 
 #include <comum.h>
 
-volatile int tempo100us = 0;
+volatile int tempo100us = 0, timer100us = 0;
+volatile int timer1ms = 0, timer10ms = 0, timer100ms = 0;
+volatile int timer1s = 0;
+
+extern int timeoutEsteira, flagEsteiraOn, flagMotorDosadorOn, flagUltimoEnvase, flagReservatorioBaixo;
 
 void ConfigTimers( void )
 {
@@ -35,28 +39,63 @@ void ConfigTimers( void )
 void Delay100us(unsigned int tempo){
 	
 	tempo100us = 0;
-	while(tempo100us < tempo)
-	{
-		
-	}
+	while(tempo100us < tempo);
 	
 }
 
 ISR(TIMER0_OVF_vect)
 {
 	TCNT0 = VALOR_TCNT_100uS;
+	
 	if(tempo100us < 65535)
 	{
 		tempo100us++;
 	}
+
+	timer100us++;
+	if(timer100us > 9)
+	{
+		timer100us = 0;
+		timer1ms++;
+	}
+
+	if(timer1ms > 9)
+	{
+		timer1ms = 0;
+		timer10ms++;
+	}
+
+	if(timer10ms > 9)
+	{
+		timer10ms = 0;
+		timer100ms++;
+	}
+
+	if(timer100ms > 9)
+	{
+		timer100ms = 0;
+		if(timeoutEsteira < 65535)
+		{
+			timeoutEsteira++;
+		}
+		flagUltimoEnvase = !flagUltimoEnvase;
+		flagReservatorioBaixo = !flagReservatorioBaixo;
+	}
+
 }
 
 ISR(TIMER1_COMPA_vect)
 {
-	LAMPADA_VERMELHA_TGL;
+	if(flagEsteiraOn)
+	{
+		MOTOR_ESTEIRA_TGL;
+	}
 }
 
 ISR(TIMER2_COMPA_vect)
 {
-	LAMPADA_AMARELA_TGL;
+	if(flagMotorDosadorOn)
+	{
+		MOTOR_DOSADOR_TGL;
+	}
 }
